@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Formulário de cadastro de voluntários — Organização Solidária.">
+  <title>Cadastro | Organização Solidária</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header role="banner">
+    <img src="img/logo.png" alt="Logotipo Organização Solidária" width="140">
+    <h1>Formulário de Cadastro de Voluntário</h1>
+
+    <nav role="navigation" aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="projetos.html">Projetos</a></li>
+        <li><a href="cadastro.html" aria-current="page">Cadastro</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section aria-labelledby="instrucao">
+      <h2 id="instrucao">Preencha seus dados para se tornar voluntário</h2>
+      <p>Campos marcados com <span aria-hidden="true">*</span> são obrigatórios.</p>
+    </section>
+
+    <section>
+      <form id="form-cadastro" action="#" method="post" novalidate>
+        <!-- Agrupamento: dados pessoais -->
+        <fieldset>
+          <legend>Dados Pessoais</legend>
+
+          <label for="nome">Nome Completo <span>*</span></label>
+          <input id="nome" name="nome" type="text" required minlength="3" maxlength="100" placeholder="Seu nome completo" autocomplete="name">
+
+          <label for="email">E-mail <span>*</span></label>
+          <input id="email" name="email" type="email" required placeholder="seu@exemplo.com" autocomplete="email">
+
+          <label for="cpf">CPF <span>*</span></label>
+          <input id="cpf" name="cpf" type="text" inputmode="numeric" required pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00" maxlength="14" aria-describedby="cpf-help">
+
+          <small id="cpf-help">Formato: 000.000.000-00</small>
+
+          <label for="telefone">Telefone <span>*</span></label>
+          <input id="telefone" name="telefone" type="tel" inputmode="tel" required pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(00) 00000-0000" maxlength="15" aria-describedby="tel-help">
+          <small id="tel-help">Formato: (00) 00000-0000</small>
+
+          <label for="nascimento">Data de Nascimento <span>*</span></label>
+          <input id="nascimento" name="nascimento" type="date" required max="">
+        </fieldset>
+
+        <!-- Agrupamento: endereço -->
+        <fieldset>
+          <legend>Endereço</legend>
+
+          <label for="endereco">Endereço</label>
+          <input id="endereco" name="endereco" type="text" placeholder="Rua, número, complemento" autocomplete="street-address">
+
+          <label for="cep">CEP <span>*</span></label>
+          <input id="cep" name="cep" type="text" inputmode="numeric" required pattern="\d{5}-\d{3}" placeholder="00000-000" maxlength="9" aria-describedby="cep-help">
+          <small id="cep-help">Formato: 00000-000</small>
+
+          <label for="cidade">Cidade</label>
+          <input id="cidade" name="cidade" type="text" placeholder="Cidade" autocomplete="address-level2">
+
+          <label for="estado">Estado</label>
+          <select id="estado" name="estado" autocomplete="address-level1" required>
+            <option value="">Selecione...</option>
+            <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
+            <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
+            <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+            <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
+            <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+            <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option>
+            <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
+            <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
+            <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+          </select>
+        </fieldset>
+
+        <!-- Agrupamento: disponibilidade -->
+        <fieldset>
+          <legend>Disponibilidade</legend>
+          <label for="area">Área de interesse</label>
+          <select id="area" name="area">
+            <option value="">Selecione...</option>
+            <option value="alimentacao">Alimentação</option>
+            <option value="educacao">Educação</option>
+            <option value="saude">Saúde</option>
+            <option value="logistica">Logística</option>
+            <option value="comunicacao">Comunicação</option>
+          </select>
+
+          <label>Turnos disponíveis</label>
+          <div role="group" aria-label="Turnos disponíveis">
+            <label><input type="checkbox" name="turno" value="manha"> Manhã</label>
+            <label><input type="checkbox" name="turno" value="tarde"> Tarde</label>
+            <label><input type="checkbox" name="turno" value="noite"> Noite</label>
+          </div>
+        </fieldset>
+
+        <p>
+          <button type="submit">Enviar Cadastro</button>
+          <button type="reset">Limpar</button>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <p>&copy; <span id="ano3"></span> Organização Solidária</p>
+    <script>document.getElementById('ano3').textContent = new Date().getFullYear();</script>
+  </footer>
+
+  <!-- Scripts: máscaras simples e validação adicional -->
+  <script>
+    // Define data máximo para nascimento (para evitar datas futuras)
+    (function() {
+      const nascimento = document.getElementById('nascimento');
+      const hoje = new Date().toISOString().split('T')[0];
+      nascimento.setAttribute('max', hoje);
+    })();
+
+    // Máscara para CPF, Telefone e CEP (entrada ao digitar)
+    function apenasNumeros(str) {
+      return str.replace(/\D/g, '');
+    }
+
+    function mascararCPF(valor) {
+      valor = apenasNumeros(valor).slice(0,11);
+      valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+      valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+      valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      return valor;
+    }
+
+    function mascararTelefone(valor) {
+      valor = apenasNumeros(valor).slice(0,11);
+      if (valor.length <= 10) {
+        // (00) 0000-0000
+        valor = valor.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3').replace(/-$/, '');
+      } else {
+        // (00) 00000-0000
+        valor = valor.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3').replace(/-$/, '');
+      }
+      return valor;
+    }
+
+    function mascararCEP(valor) {
+      valor = apenasNumeros(valor).slice(0,8);
+      valor = valor.replace(/(\d{5})(\d{0,3})/, '$1-$2').replace(/-$/, '');
+      return valor;
+    }
+
+    // Aplica máscaras nos eventos input
+    document.getElementById('cpf').addEventListener('input', function(e) {
+      const start = this.selectionStart;
+      this.value = mascararCPF(this.value);
+      this.setSelectionRange(start, start);
+    });
+
+    document.getElementById('telefone').addEventListener('input', function(e) {
+      const start = this.selectionStart;
+      this.value = mascararTelefone(this.value);
+      this.setSelectionRange(start, start);
+    });
+
+    document.getElementById('cep').addEventListener('input', function(e) {
+      const start = this.selectionStart;
+      this.value = mascararCEP(this.value);
+      this.setSelectionRange(start, start);
+    });
+
+    // Validação nativa + feedback simples antes do envio
+    document.getElementById('form-cadastro').addEventListener('submit', function(e) {
+      if (!this.checkValidity()) {
+        // permite que o navegador mostre mensagens nativas de validação
+        // e impede o envio para correção
+        e.preventDefault();
+        this.reportValidity();
+      } else {
+        // Aqui poderia ir a lógica de envio (fetch), por enquanto apenas impedir navegação real
+        e.preventDefault();
+        alert('Cadastro enviado com sucesso (simulado). Verifique o repositório GitHub e envie o projeto conforme as instruções da atividade.');
+      }
+    });
+  </script>
+</body>
+</html>
